@@ -1,0 +1,47 @@
+.imgCounter{
+    float:right;
+}
+.imgCaptcha {
+    border: solid 1px #ccc;
+    margin: 1em;
+    position: absolute;
+    top: 10%;
+    right: 80%;
+}
+.solve{
+    margin: 1em;
+    position: absolute;
+    top:16%;
+    right: 67%;
+}
+.butCap{
+    margin: 1em;
+    position: absolute;
+    top: 16%;
+    right: 63%;
+
+}
+.pAlert{
+    font-family:verdana,arial;
+    font-size:80%;
+    color:black;
+    text-align: center;
+}
+.pTitle{
+    font-family:verdana,arial;
+    font-size:80%;
+    text-align:center;
+    color:red;
+}
+.pAlert{
+    font-family:verdana,arial;
+    font-size:80%;
+    color:brown;
+}
+.pTitle{
+    font-family:verdana,arial;
+    font-size:80%;
+    text-align:center;
+    color:red;
+}
+
