@@ -23,9 +23,7 @@ function dateiGroesse($file) {
 }
 
 function senden($content) {
-//$url = 'index.php';
     try {
-        $_SESSION['message'] = $content;
         $heute = date("Y-m-d H:i:s");
         $to = 'kipp.thomas@tklustig.de';
         $subject = 'Installationsprobleme u.a.';
@@ -40,10 +38,14 @@ function senden($content) {
         $umlaute = array("ä", "ö", "ü", "Ä", "Ö", "Ü", "ß");
         $ersetzen = array("ae", "oe", "ue", "Ae", "Oe", "Ue", "ss");
         $send_mail = str_replace($umlaute, $ersetzen, $nachricht);
-        mail($to, $subject, $send_mail, $header);
+        $success = mail($to, $subject, $send_mail, $header);
         $datei = fopen("nachricht.txt", "a+");
         $ausgabe = "$nachricht\r\n";
-        echo"Folgende Parameter wurden verschickt:<br><br>Absender:$fromEmail<br>Empfänger:$to<br>Betreff:$subject<br>$nachricht<br>Rumpf:$header";
+        if ($success) {
+            echo"<p>Folgende Parameter wurden verschickt:<br><br>Absender:$fromEmail<br>Empfänger:$to<br>Betreff:$subject<br>$nachricht</p>";
+            echo"<h4>$header</h4>";
+        } else
+            echo'<p> Die Mail konnte nicht verschickt werden';
         fputs($datei, $heute);
         fputs($datei, $ausgabe); // schreibt die Nachricht i.d.Datei
         fclose($datei);
@@ -64,66 +66,110 @@ $filename8 = "SpaceShooter.zip";
 $filename9 = "Halma.zip";
 
 if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gesendet wurde (= Ein Knopf gedrückt wurde)
-    if (file_exists($filename1) && isset($_SESSION['boolIsSolved']) && $_SESSION['boolIsSolved'] == true) {
+    if (file_exists($filename1) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename1);
+        $_SESSION['captchaIsSolved'] = false;
     } else {
-        echo("<center><h2>Datei nicht existent oder Captcha nicht korrekt gelöst</h3></center>");
+        ?>
+        <script>
+            confirm('Bitte das Captcha korrekt eingeben');
+        </script>
+        <?php
     }
 }
 if (!empty($_REQUEST["download2"])) {
-    if (file_exists($filename2)) {
+    if (file_exists($filename2) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename2);
+        $_SESSION['captchaIsSolved'] = false;
     } else {
-        echo("<center><h3>Datei nicht existent</h3></center>");
+        ?>
+        <script>
+            confirm('Bitte das Captcha korrekt eingeben');
+        </script>
+        <?php
     }
 }
 if (!empty($_REQUEST["download3"])) {
-    if (file_exists($filename3)) {
+    if (file_exists($filename2) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename3);
+        $_SESSION['captchaIsSolved'] = false;
     } else {
-        echo("<center><h3>Datei nicht existent</h3></center>");
+        ?>
+        <script>
+            confirm('Bitte das Captcha korrekt eingeben');
+        </script>
+        <?php
     }
 }
 if (!empty($_REQUEST["download4"])) {
-    if (file_exists($filename4)) {
+    if (file_exists($filename4) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename4);
+        $_SESSION['captchaIsSolved'] = false;
     } else {
-        echo("<center><h3>Datei nicht existent</h3></center>");
+        ?>
+        <script>
+            confirm('Bitte das Captcha korrekt eingeben');
+        </script>
+        <?php
     }
 }
 if (!empty($_REQUEST["download5"])) {
-    if (file_exists($filename5)) {
+    if (file_exists($filename5) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename5);
     } else {
-        echo("<center><h3>Datei nicht existent</h3></center>");
+        ?>
+        <script>
+            confirm('Bitte das Captcha korrekt eingeben');
+        </script>
+        <?php
     }
 }
 if (!empty($_REQUEST["download6"])) {
-    if (file_exists($filename6)) {
+    if (file_exists($filename6) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename6);
+        $_SESSION['captchaIsSolved'] = false;
     } else {
-        echo("<center><h3>Datei nicht existent</h3></center>");
+        ?>
+        <script>
+            confirm('Bitte das Captcha korrekt eingeben');
+        </script>
+        <?php
     }
 }
 if (!empty($_REQUEST["download7"])) {
-    if (file_exists($filename7)) {
+    if (file_exists($filename7) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename7);
+        $_SESSION['captchaIsSolved'] = false;
     } else {
-        echo("<center><h3>Datei nicht existent</h3></center>");
+        ?>
+        <script>
+            confirm('Bitte das Captcha korrekt eingeben');
+        </script>
+        <?php
     }
 }
 if (!empty($_REQUEST["download8"])) {
-    if (file_exists($filename8)) {
+    if (file_exists($filename8) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename8);
+        $_SESSION['captchaIsSolved'] = false;
     } else {
-        echo("<center><h3>Datei nicht existent</h3></center>");
+        ?>
+        <script>
+            confirm('Bitte das Captcha korrekt eingeben');
+        </script>
+        <?php
     }
 }
 if (!empty($_REQUEST["download9"])) {
-    if (file_exists($filename9)) {
+    if (file_exists($filename9) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename9);
+        $_SESSION['captchaIsSolved'] = false;
     } else {
-        echo("<center><h3>Datei nicht existent</h3></center>");
+        ?>
+        <script>
+            confirm('Bitte das Captcha korrekt eingeben');
+        </script>
+        <?php
     }
 }
 ?>
@@ -161,11 +207,13 @@ if (!empty($_REQUEST["download9"])) {
                 var yAlertStart = screen.left;
                 var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
                 var alertText = "<p class='pAlert'>Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!</p>";
-                showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
+                var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nApplikation wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
+                confirm(ausgabe);
+				open(location, '_self').close();							
             }
             var output = detect();
             document.body.innerHTML = output;
-        </script>
+        </script>     
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
@@ -196,9 +244,8 @@ if (!empty($_REQUEST["download9"])) {
         </div>
         <div class="jumbotron">
             <div class = "container">
-                <div class="row">                  
-                    <!--   <form action="senden.php" class="form-inline" method="post" > -->
-                    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" class="form-inline" method="post">                    
+                <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" class="form-inline" method="post">
+                    <div class="row">                                                  
                         <div class="col-md-6">
                             <div class="page-header">
                                 <h2>Downloadbereich <small>Laden Sie meine Applikationen runter.... </small></h2>
@@ -208,45 +255,39 @@ if (!empty($_REQUEST["download9"])) {
                             <div class="form-group">
                                 <label>Nachrichten hier!</label>
                                 <textarea  rows="6"cols="175" id="comment"  name="MsgBox" placeholder="MessageBox:Nachrichten hier!"><?php
-                                    if (!empty($_SESSION['message'])) {
-                                        echo $_SESSION['message'];
+                                    if (!empty($_REQUEST['MsgBox'])) {
+                                        echo $_REQUEST['MsgBox'];
                                     }
                                     ?>
                                 </textarea>
                                 <script>
                                     CKEDITOR.replace('comment');
                                 </script>
-                            </div>
-
+                            </div>                     
                             <br>
                             <input type="submit" name="message" class="btn btn-success btn-sm"  value="Absenden">
                             <button class="btn btn-primary btn-sm" onclick="Reload()">Reload Page</button>
-                        </div>
+                        </div>               
                         <input class="solve" type=text name="cap" placeholder="Captcha:">
-                        <input class="butCap" type="submit" name="push" value="Loesen">
-                    </form>
-                </div>
-                <div class="row">
-
-                    <div class="well">
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <div class="alert alert-info" role="alert">Pushen Sie auf einen der Downloadbuttons, um die entsprechende Applikation runterzuladen. Entpacken Sie die komprimierte Datei in einen beliebigen Ordner und starten Sie die jeweilige EXE-Datei.</div>
-                                <ul>
-                                    <li>
-                                        Bei Problemen lesen Sie - sofern vorhanden- die ReadmeFirst.txt aufmerksam durch
-                                    </li>
-                                    <li>
-                                        Sollten dennoch Probleme während der Installation auftreten, die Applikation läuft partout nicht, dann schicken Sie mir bitte eine Nachricht in der MessageBox.
-                                    </li>
-                                    <li>
-                                        u.U. kann die Zip File durch den Download beschädigt und somit nicht extrahiert werden. In diesem Falle hilft <a href="https://www.diskinternals.com/zip-repair/" target="_blank">dieses</a> Tool weiter.
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="panel-footer">
-                                <div class="table-responsive">
-                                    <form action="<?= $_SERVER['SCRIPT_NAME']; ?>"  method="post" >
+                        <input class="butCap" type="submit" name="push" value="Captcha prüfen">  
+                        <div class="well">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="alert alert-info" role="alert"><strong>Lösen Sie zunächst das Captcha</strong> und Pushen Sie sodann auf einen der Downloadbuttons, um die entsprechende Applikation runterzuladen. Entpacken Sie die komprimierte Datei in einen beliebigen Ordner und starten Sie die jeweilige EXE-Datei.</div>
+                                    <ul>
+                                        <li>
+                                            Bei Problemen lesen Sie - sofern vorhanden- die ReadmeFirst.txt aufmerksam durch
+                                        </li>
+                                        <li>
+                                            Sollten dennoch Probleme während der Installation auftreten, die Applikation läuft partout nicht, dann schicken Sie mir bitte eine Nachricht in der MessageBox.
+                                        </li>
+                                        <li>
+                                            u.U. kann die Zip File durch den Download beschädigt und somit nicht extrahiert werden. In diesem Falle hilft <a href="https://www.diskinternals.com/zip-repair/" target="_blank">dieses</a> Tool weiter.
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="panel-footer">
+                                    <div class="table-responsive">
                                         <table class="table table-condensed">
                                             <thead>
                                                 <tr>
@@ -323,90 +364,100 @@ if (!empty($_REQUEST["download9"])) {
                                                 </tr>										
                                             </tbody>
                                         </table>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> 
                     </div>
-                </div>
+                </form>
             </div>
         </div>
+    </form>
+    <script>
+        function Reload() {
+            alert("Inhalt wird über JavaScript neu geladen...");
+            location.reload();
+        }
+    </script>
+    <?php
+    //verarbeite Trigger1: Absenden-Submitbutton wurde gepusht und Messagebox ist nicht leer
+    if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
+        if (isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
+            senden($_REQUEST['MsgBox']);
+            $_SESSION['captchaIsSolved'] = false;
+        } else {
+            ?>
+            <script>
+                confirm('Bitte das Captcha korrekt eingeben');
+            </script>
+            <?php
+        }
+        //verarbeite Trigger2:Absenden-Submitbutton wurde gepusht und Messagebox ist leer
+    } else if (isset($_REQUEST['message']) && empty($_REQUEST['MsgBox'])) {
+        ?>
         <script>
-            function Reload() {
-                alert("Inhalt wird über JavaScript neu geladen...");
-                location.reload();
-            }
+            var alertWidth = 350;
+            var alertHeight = 200;
+            var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
+            var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
+            var alertTitle = "<p class='pTitle'><strong>! Warnung !</p></strong>";
+            var alertText = "<label class='pAlert'>Bitte vermeiden Sie unnötigen Traffic und schreiben Sie eine Nachricht.</label>";
+            showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
         </script>
         <?php
-//verarbeite Trigger1: Absenden-Submitbutton wurde gepusht und Messagebox ist nicht leer
-        if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
-            senden($_REQUEST['MsgBox']);
-
-//verarbeite Trigger2:Absenden-Submitbutton wurde gepusht und Messagebox ist leer
-        } else if (isset($_REQUEST['message']) && empty($_REQUEST['MsgBox'])) {
-            ?>
-            <script>
-                var alertWidth = 350;
-                var alertHeight = 200;
-                var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
-                var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
-                var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
-                var alertText = "<p class='pAlert'>Bitte vermeiden Sie unnötigen Traffic und schreiben Sie eine Nachricht.</p>";
-                showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
-            </script>
-            <?php
-        }
-//verarbeite Trigger3: Loesen-Submittbutton wurde gedrückt und Captchabox ist leer
-        if (isset($_REQUEST['push']) && empty($_REQUEST['cap'])) {
-            ?>
-            <script>
-                var alertWidth = 350;
-                var alertHeight = 200;
-                var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
-                var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
-                var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
-                var alertText = "<p class='pAlert'>Bitte Captchacode eingeben";
-                showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
-            </script>
-            <?php
-            //verarbeite Trigger4:Loesen-Submitbutton wurde gedrückt und Captchbox ist nicht leer
-        } else if (isset($_REQUEST['push']) && !empty($_REQUEST['cap'])) {
-            //verarbeite Trigger4.1:Captcha wurde korrekt eingegeben
-            if (isset($_SESSION['captcha']) && $_REQUEST['cap'] == $_SESSION['captcha']['code']) {
-                $_SESSION['boolIsSolved'] = true;
-                ?>
-                <script>
-                    var alertWidth = 350;
-                    var alertHeight = 200;
-                    var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
-                    var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
-                    var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
-                    var alertText = "<p class='pAlert'>Captcha wurde gelöst";
-                    showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
-                </script>
-                <?php
-                //verarbeite Trigger5:Captcha wurde inkorrekt eingegeben
-            } else {
-                $_SESSION['boolIsSolved'] = false;
-                ?>
-                <script>
-                    var alertWidth = 350;
-                    var alertHeight = 200;
-                    var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
-                    var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
-                    var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
-                    var alertText = "<p class='pAlert'>Captcha wurde nicht gelöst";
-                    showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
-                </script>
-                <?php
-            }
-        }
-        require_once ("SimplePhpCaptcha.php");
-        $_SESSION['captcha'] = simple_php_captcha();
-        $captcha = '<img class="imgCaptcha" src="' . $_SESSION['captcha']['image_src'] . '" alt="CAPTCHA code">';
-        echo $captcha;
-        $_REQUEST = array();
+    }
+//verarbeite Trigger3: Check-Submittbutton wurde gedrückt und Captchabox ist leer
+    if (isset($_REQUEST['push']) && empty($_REQUEST['cap'])) {
         ?>
-    </body>
+        <script>
+            var alertWidth = 350;
+            var alertHeight = 200;
+            var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
+            var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
+            var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
+            var alertText = "<p class='pAlert'>Bitte Captchacode eingeben</p>";
+            showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
+        </script>
+        <?php
+        $_SESSION['captchaIsSolved'] = false;
+        //verarbeite Trigger4:Check-Submitbutton wurde gedrückt und Captchbox ist nicht leer
+    } else if (isset($_REQUEST['push']) && !empty($_REQUEST['cap'])) {
+        //verarbeite Trigger4.1:Captcha wurde korrekt eingegeben
+        if (isset($_SESSION['captcha']) && $_REQUEST['cap'] == $_SESSION['captcha']['code']) {
+            ?>
+            <script>
+                var alertWidth = 350;
+                var alertHeight = 200;
+                var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
+                var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
+                var alertTitle = "<p class='pTitle'><strong>! Success !</strong></p>";
+                var alertText = "<p class='pAlert'>Captcha wurde gelöst</p>";
+                showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
+            </script>
+            <?php
+            $_SESSION['captchaIsSolved'] = true;
+            //verarbeite Trigger5:Captcha wurde inkorrekt eingegeben
+        } else {
+            ?>
+            <script>
+                var alertWidth = 350;
+                var alertHeight = 200;
+                var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
+                var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
+                var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
+                var alertText = "<p class='pAlert'>Captcha wurde nicht gelöst";
+                showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
+            </script>
+            <?php
+            $_SESSION['captchaIsSolved'] = false;
+        }
+    }
+    require_once ("SimplePhpCaptcha.php");
+    $_SESSION['captcha'] = simple_php_captcha();
+    $captcha = '<img class="imgCaptcha" src="' . $_SESSION['captcha']['image_src'] . '" alt="CAPTCHA code">';
+    echo $captcha;
+    $_REQUEST = array();
+    ?>
+</body>
 </html>
 
