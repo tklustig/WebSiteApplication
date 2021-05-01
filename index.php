@@ -44,8 +44,31 @@ function senden($content) {
         if ($success) {
             echo"<p>Folgende Parameter wurden verschickt:<br><br>Absender:$fromEmail<br>Empfänger:$to<br>Betreff:$subject<br>$nachricht</p>";
             echo"<h4>$header</h4>";
-        } else
-            echo'<p> Die Mail konnte nicht verschickt werden';
+            ?>
+            <script>
+                var alertWidth = 350;
+                var alertHeight = 200;
+                var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
+                var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
+                var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
+                var alertText = "<p class='pAlert'>Nachricht wurde verschickt. Further informations see above!</p>";
+                showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
+            </script>
+            <?php
+        } else {
+            //echo'<p> Die Mail konnte nicht verschickt werden';
+            ?>
+            <script>
+                var alertWidth = 350;
+                var alertHeight = 200;
+                var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
+                var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
+                var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
+                var alertText = "<p class='pAlert'>Die Mail konnte nicht verschickt werden</p>";
+                showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
+            </script>
+            <?php
+        }
         fputs($datei, $heute);
         fputs($datei, $ausgabe); // schreibt die Nachricht i.d.Datei
         fclose($datei);
@@ -55,15 +78,16 @@ function senden($content) {
     }
 }
 
-$filename1 = "SchachClient.zip";
-$filename2 = "Vokabeltrainer.zip";
-$filename3 = "PuzzleGame.zip";
-$filename4 = "Backgammon.zip";
-$filename5 = "Memory.zip";
-$filename6 = "DirectX_SpaceDemo.zip";
-$filename7 = "Snaker.zip";
-$filename8 = "SpaceShooter.zip";
-$filename9 = "Halma.zip";
+$filename1 = 'SchachClient.zip';
+$filename2 = 'Vokabeltrainer.zip';
+$filename3 = 'PuzzleGame.zip';
+$filename4 = 'Backgammon.zip';
+$filename5 = 'Memory.zip';
+$filename6 = 'DirectX_SpaceDemo.zip';
+$filename7 = 'Snaker.zip';
+$filename8 = 'SpaceShooter.zip';
+$filename9 = 'Halma.zip';
+$filename10 = 'Pacman.zip';
 
 if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gesendet wurde (= Ein Knopf gedrückt wurde)
     if (file_exists($filename1) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
@@ -76,8 +100,7 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
         </script>
         <?php
     }
-}
-if (!empty($_REQUEST["download2"])) {
+} else if (!empty($_REQUEST["download2"])) {
     if (file_exists($filename2) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename2);
         $_SESSION['captchaIsSolved'] = false;
@@ -88,8 +111,7 @@ if (!empty($_REQUEST["download2"])) {
         </script>
         <?php
     }
-}
-if (!empty($_REQUEST["download3"])) {
+} else if (!empty($_REQUEST["download3"])) {
     if (file_exists($filename2) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename3);
         $_SESSION['captchaIsSolved'] = false;
@@ -100,8 +122,7 @@ if (!empty($_REQUEST["download3"])) {
         </script>
         <?php
     }
-}
-if (!empty($_REQUEST["download4"])) {
+} else if (!empty($_REQUEST["download4"])) {
     if (file_exists($filename4) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename4);
         $_SESSION['captchaIsSolved'] = false;
@@ -112,8 +133,7 @@ if (!empty($_REQUEST["download4"])) {
         </script>
         <?php
     }
-}
-if (!empty($_REQUEST["download5"])) {
+} else if (!empty($_REQUEST["download5"])) {
     if (file_exists($filename5) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename5);
     } else {
@@ -123,8 +143,7 @@ if (!empty($_REQUEST["download5"])) {
         </script>
         <?php
     }
-}
-if (!empty($_REQUEST["download6"])) {
+} else if (!empty($_REQUEST["download6"])) {
     if (file_exists($filename6) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename6);
         $_SESSION['captchaIsSolved'] = false;
@@ -135,8 +154,7 @@ if (!empty($_REQUEST["download6"])) {
         </script>
         <?php
     }
-}
-if (!empty($_REQUEST["download7"])) {
+} else if (!empty($_REQUEST["download7"])) {
     if (file_exists($filename7) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename7);
         $_SESSION['captchaIsSolved'] = false;
@@ -147,8 +165,7 @@ if (!empty($_REQUEST["download7"])) {
         </script>
         <?php
     }
-}
-if (!empty($_REQUEST["download8"])) {
+} else if (!empty($_REQUEST["download8"])) {
     if (file_exists($filename8) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename8);
         $_SESSION['captchaIsSolved'] = false;
@@ -159,10 +176,21 @@ if (!empty($_REQUEST["download8"])) {
         </script>
         <?php
     }
-}
-if (!empty($_REQUEST["download9"])) {
+} else if (!empty($_REQUEST["download9"])) {
     if (file_exists($filename9) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename9);
+        $_SESSION['captchaIsSolved'] = false;
+    } else {
+        ?>
+        <script>
+            confirm('Bitte das Captcha korrekt eingeben');
+        </script>
+        <?php
+    }
+}
+if (!empty($_REQUEST["download10"])) {
+    if (file_exists($filename10) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
+        makeDownload($filename10);
         $_SESSION['captchaIsSolved'] = false;
     } else {
         ?>
@@ -176,6 +204,7 @@ if (!empty($_REQUEST["download9"])) {
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- definiere Metatags-->
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <meta charset='utf-8'><!-- charset[utf-8:]  definiert den deutschen Zeichensatz -->
         <meta name='msvalidate.01' content='8B12875037645A4090EE64488042FDA9' /><!--validiert die Website für Bing und Yahoo-->
@@ -199,20 +228,20 @@ if (!empty($_REQUEST["download9"])) {
     </head>
     <body>
         <script>
-            var breiteCheck = window.innerWidth < 990 ? true : false;
-            if (breiteCheck) {
-                var alertWidth = 350;
-                var alertHeight = 200;
-                var xAlertStart = screen.top;
-                var yAlertStart = screen.left;
-                var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
-                var alertText = "<p class='pAlert'>Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!</p>";
-                var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nApplikation wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
-                confirm(ausgabe);
-				open(location, '_self').close();							
-            }
-            var output = detect();
-            document.body.innerHTML = output;
+    var breiteCheck = window.innerWidth < 990 ? true : false;
+    if (breiteCheck) {
+        var alertWidth = 350;
+        var alertHeight = 200;
+        var xAlertStart = screen.top;
+        var yAlertStart = screen.left;
+        var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
+        var alertText = "<p class='pAlert'>Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!</p>";
+        var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nApplikation wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
+        confirm(ausgabe);
+        open(location, '_self').close();
+    }
+    var output = detect();
+    document.body.innerHTML = output;
         </script>     
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -361,7 +390,14 @@ if (!empty($_REQUEST["download9"])) {
                                                     <td>C#</td>
                                                     <td><input type="submit" name="download9" class="btn btn-info btn-sm" value="<?= $filename9; ?>"></td>
                                                     <td><?= dateiGroesse($filename9); ?></td>
-                                                </tr>										
+                                                </tr>
+                                                <tr>
+                                                    <td>WPF</td>
+                                                    <td>Pacman</td>
+                                                    <td>C#</td>
+                                                    <td><input type="submit" name="download10" class="btn btn-info btn-sm" value="<?= $filename10; ?>"></td>
+                                                    <td><?= dateiGroesse($filename10); ?></td>
+                                                </tr>												
                                             </tbody>
                                         </table>
                                     </div>
@@ -380,7 +416,7 @@ if (!empty($_REQUEST["download9"])) {
         }
     </script>
     <?php
-    //verarbeite Trigger1: Absenden-Submitbutton wurde gepusht und Messagebox ist nicht leer
+//verarbeite Trigger1: Absenden-Submitbutton wurde gepusht und Messagebox ist nicht leer
     if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
         if (isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
             senden($_REQUEST['MsgBox']);
@@ -406,7 +442,7 @@ if (!empty($_REQUEST["download9"])) {
         </script>
         <?php
     }
-//verarbeite Trigger3: Check-Submittbutton wurde gedrückt und Captchabox ist leer
+    //verarbeite Trigger3: Check-Submittbutton wurde gedrückt und Captchabox ist leer
     if (isset($_REQUEST['push']) && empty($_REQUEST['cap'])) {
         ?>
         <script>
@@ -456,7 +492,12 @@ if (!empty($_REQUEST["download9"])) {
     $_SESSION['captcha'] = simple_php_captcha();
     $captcha = '<img class="imgCaptcha" src="' . $_SESSION['captcha']['image_src'] . '" alt="CAPTCHA code">';
     echo $captcha;
-    $_REQUEST = array();
+    if (!empty($_REQUEST))
+        $_REQUEST = array();
+    /* alternativ 
+      foreach ($_REQUEST as $element) {
+      unset($element);
+      } */
     ?>
 </body>
 </html>
