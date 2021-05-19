@@ -305,6 +305,9 @@ if (!empty($_REQUEST["download10"])) {
                                     <div class="alert alert-info" role="alert"><strong>Lösen Sie zunächst das Captcha</strong> und Pushen Sie sodann auf einen der Downloadbuttons, um die entsprechende Applikation runterzuladen. Entpacken Sie die komprimierte Datei in einen beliebigen Ordner und starten Sie die jeweilige EXE-Datei.</div>
                                     <ul>
                                         <li>
+                                            Steuern Sie unter 'My Websites' auch meine Webseiten an. Letztere ist kostenpflichtig, alle anderen sind Open Source.
+                                        </li>
+                                        <li>
                                             Bei Problemen lesen Sie - sofern vorhanden- die ReadmeFirst.txt aufmerksam durch
                                         </li>
                                         <li>
