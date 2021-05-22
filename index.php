@@ -51,7 +51,7 @@ function senden($content) {
                 var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
                 var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
                 var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
-                var alertText = "<p class='pAlert'>Nachricht wurde verschickt. Further informations see above!</p>";
+                var alertText = "<p class='pAlert'>Nachricht wurde verschickt - siehe ganz unten -/p>";
                 showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
             </script>
             <?php
