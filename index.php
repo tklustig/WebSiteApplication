@@ -210,12 +210,12 @@ if (!empty($_REQUEST["download10"])) {
         <meta name='msvalidate.01' content='8B12875037645A4090EE64488042FDA9' /><!--validiert die Website für Bing und Yahoo-->
         <meta name='date' content='2017-02-3T08:49:37+02:00'>		<!-- Angaben, wann die Seite publiziert wurde-->
         <meta name='keywords' content='DownloadArea'>	<!-- versorgt die Spider der Suchmaschinen mit Informationen zwecks Suchbegriffen -->
-        <meta name='description' content='myWebSites und Downloads'>	<!-- Beschreibung, die in den Suchmaschinen erscheinen soll. -->
+        <meta name='description' content='WebSites, Download'>	<!-- Beschreibung, die in den Suchmaschinen erscheinen soll. -->
         <meta name='robots' content='index,follow'>			<!-- Links sollen mitindiziert werden //NOINDEX:Seite soll nicht aufgenommen werden//NOFOLLOW Links werden nicht verfolgt-->
         <meta name='audience' content='alle'>				<!-- definiert die Zielgruppe der Website  -->
         <meta name='page-topic' content='Dienstleistung'>		<!-- Zuordnungsdefinition für die Suchmaschine -->
         <meta name='revisit-after' CONTENT='7 days'>			<!-- definiert den erneuten Besuch des Spiders//hier:nach sieben Tagen  -->
-        <title>Login Done</title>
+        <title>Download Area</title>
         <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' crossorigin='anonymous'>
         <link rel='icon' href='data:;base64,iVBORw0KGgo='>
         <script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>
