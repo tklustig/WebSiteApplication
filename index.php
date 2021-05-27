@@ -42,7 +42,7 @@ function senden($content) {
         $datei = fopen("nachricht.txt", "a+");
         $ausgabe = "$nachricht\r\n";
         if ($success) {
-            echo"<p>Folgende Parameter wurden verschickt:<br><br>Absender:$fromEmail<br>Empfänger:$to<br>Betreff:$subject<br>$nachricht</p>";
+            echo"<p>Folgende Parameter wurden verschickt:<br>Empfänger:$to<br>Betreff: $subject<br>$nachricht</p>";
             echo"<h4>$header</h4>";
             ?>
             <script>
@@ -50,7 +50,7 @@ function senden($content) {
                 var alertHeight = 200;
                 var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
                 var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
-                var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
+                var alertTitle = "<p class='pTitle'><strong>! Info !</strong></p>";
                 var alertText = "<p class='pAlert'>Nachricht wurde verschickt -siehe ganz unten-</p>";
                 showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
             </script>
@@ -63,7 +63,7 @@ function senden($content) {
                 var alertHeight = 200;
                 var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
                 var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
-                var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
+                var alertTitle = "<p class='pTitle'><strong>! Error !</strong></p>";
                 var alertText = "<p class='pAlert'>Die Mail konnte nicht verschickt werden</p>";
                 showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
             </script>
