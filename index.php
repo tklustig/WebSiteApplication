@@ -88,6 +88,7 @@ $filename7 = 'Snaker.zip';
 $filename8 = 'SpaceShooter.zip';
 $filename9 = 'Halma.zip';
 $filename10 = 'Pacman.zip';
+$filename11= 'Fibonacci.zip';
 
 if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gesendet wurde (= Ein Knopf gedrückt wurde)
     if (file_exists($filename1) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
@@ -187,10 +188,20 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
         </script>
         <?php
     }
-}
-if (!empty($_REQUEST["download10"])) {
+} else if (!empty($_REQUEST["download10"])) {
     if (file_exists($filename10) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename10);
+        $_SESSION['captchaIsSolved'] = false;
+    } else {
+        ?>
+        <script>
+            confirm('Bitte das Captcha korrekt eingeben');
+        </script>
+        <?php
+    }
+} else if (!empty($_REQUEST["download11"])) {
+    if (file_exists($filename11) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
+        makeDownload($filename11);
         $_SESSION['captchaIsSolved'] = false;
     } else {
         ?>
@@ -400,7 +411,14 @@ if (!empty($_REQUEST["download10"])) {
                                                     <td>C#</td>
                                                     <td><input type="submit" name="download10" class="btn btn-info btn-sm" value="<?= $filename10; ?>"></td>
                                                     <td><?= dateiGroesse($filename10); ?></td>
-                                                </tr>												
+                                                </tr>	
+												<tr>
+                                                    <td>Mathematik</td>
+                                                    <td>Fibonacci</td>
+                                                    <td>C#</td>
+                                                    <td><input type="submit" name="download11" class="btn btn-info btn-sm" value="<?= $filename11; ?>"></td>
+                                                <td><?= dateiGroesse($filename10); ?></td>
+                                                </tr>													
                                             </tbody>
                                         </table>
                                     </div>
