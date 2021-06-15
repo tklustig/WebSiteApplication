@@ -88,7 +88,7 @@ $filename7 = 'Snaker.zip';
 $filename8 = 'SpaceShooter.zip';
 $filename9 = 'Halma.zip';
 $filename10 = 'Pacman.zip';
-$filename11= 'Fibonacci.zip';
+$filename11 = 'Fibonacci.zip';
 
 if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gesendet wurde (= Ein Knopf gedrückt wurde)
     if (file_exists($filename1) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
@@ -239,20 +239,20 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
     </head>
     <body>
         <script>
-    var breiteCheck = window.innerWidth < 990 ? true : false;
-    if (breiteCheck) {
-        var alertWidth = 350;
-        var alertHeight = 200;
-        var xAlertStart = screen.top;
-        var yAlertStart = screen.left;
-        var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
-        var alertText = "<p class='pAlert'>Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!</p>";
-        var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nApplikation wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
-        confirm(ausgabe);
-        open(location, '_self').close();
-    }
-    var output = detect();
-    document.body.innerHTML = output;
+            var breiteCheck = window.innerWidth < 990 ? true : false;
+            if (breiteCheck) {
+                var alertWidth = 350;
+                var alertHeight = 200;
+                var xAlertStart = screen.top;
+                var yAlertStart = screen.left;
+                var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
+                var alertText = "<p class='pAlert'>Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!</p>";
+                var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nApplikation wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
+                confirm(ausgabe);
+                open(location, '_self').close();
+            }
+            var output = detect();
+            document.body.innerHTML = output;
         </script>     
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -271,9 +271,11 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
                             My Websites
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="http://tklustig.de/Bewerbungen/index.php" target="_blank">Bewerbungen</a>
-                            <a class="dropdown-item" href="http://tklustig.de/temperatur/index.php" target="_blank">Temperaturmessungen</a>
-                            <a class="dropdown-item" href="http://tklustig.de/Yii2_ErkanImmo/frontend/web/index.php"target="_blank">Maklerapplikation(Demoversion)</a>
+                            <a class="dropdown-item" href="https://tklustig.de/Bewerbungen/index.php" target="_blank">Bewerbungen</a>
+                            <a class="dropdown-item" href="https://tklustig.de/SpaceShooter/ShooterJavaScript/index.html" target="_blank">JavaScript-2D-Shooter</a>
+                            <a class="dropdown-item" href="https://tklustig.de/temperatur/index.php" target="_blank">Temperaturmessungen</a>
+                            <a class="dropdown-item" href="https://tklustig.de/Yii2_ErkanImmo/frontend/web/index.php"target="_blank">Maklerapplikation(kostenpflichtig)</a>
+                            <a class="dropdown-item" href="https://tklustig.de/Yii2_PsychoApp/frontend/web/index.php"target="_blank">PsychoApp(kostenpflichtig)</a>
                         </div>
                     </li>
                 </ul>
@@ -412,12 +414,12 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
                                                     <td><input type="submit" name="download10" class="btn btn-info btn-sm" value="<?= $filename10; ?>"></td>
                                                     <td><?= dateiGroesse($filename10); ?></td>
                                                 </tr>	
-												<tr>
+                                                <tr>
                                                     <td>Mathematik</td>
                                                     <td>Fibonacci</td>
                                                     <td>C#</td>
                                                     <td><input type="submit" name="download11" class="btn btn-info btn-sm" value="<?= $filename11; ?>"></td>
-                                                <td><?= dateiGroesse($filename10); ?></td>
+                                                    <td><?= dateiGroesse($filename10); ?></td>
                                                 </tr>													
                                             </tbody>
                                         </table>
