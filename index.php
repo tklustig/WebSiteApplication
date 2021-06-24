@@ -227,10 +227,9 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
         <meta name='page-topic' content='Dienstleistung'>		<!-- Zuordnungsdefinition für die Suchmaschine -->
         <meta name='revisit-after' CONTENT='7 days'>			<!-- definiert den erneuten Besuch des Spiders//hier:nach sieben Tagen  -->
         <title>Download Area</title>
+        <script src="https://code.jquery.com/jquery-latest.js"></script>
         <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' crossorigin='anonymous'>
-        <link rel='icon' href='data:;base64,iVBORw0KGgo='>
-        <script src='https://code.jquery.com/jquery-3.3.1.slim.min.js' integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo' crossorigin='anonymous'></script>
-        <script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js' integrity='sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49' crossorigin='anonymous'></script>
+        <link rel='icon' href='data:;base64,iVBORw0KGgo='>              
         <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy' crossorigin='anonymous'></script>
         <script src='plugin/ckeditor/ckeditor.js'></script>
         <script src='js/Alert.js'></script>
@@ -254,6 +253,28 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
             var output = detect();
             document.body.innerHTML = output;
         </script>     
+        <script>
+            $(document).ready(function () {
+                rotiere_pic(0);
+            });
+
+            function rotiere_pic(photo_aktuell) {
+                var anzahl = $('#photos img').length;
+                photo_aktuell = photo_aktuell % anzahl;
+                $('#photos img').eq(photo_aktuell).fadeOut(function () {
+                    $('#photos img').each(function (i) {
+                        $(this).css(
+                                'zIndex', ((anzahl - i) + photo_aktuell) % anzahl
+                                );
+                    });
+                    $(this).show();
+                    setTimeout(function () {
+                        rotiere_pic(++photo_aktuell);
+                    }, 750);
+                });
+                $("#photos img").css({position: 'absolute', top: '18%', right: '4%', height: '50pt', width: '80pt'});
+            }
+        </script>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
@@ -283,6 +304,12 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
         </nav>
         <div class="col-md-12">
             <img class="imgCounter" src="counter.php" title="Pic1" alt="Picture1">
+        </div>
+        <div id="photos"><!-- Die CSS Anweisungen werden in der JS Funktion rotiere_pic() über den css Selektor implementiert -->
+            <img alt="moi_1" src="img/moi_coloured.jpg">
+            <img alt="moi_2" src="img/moi_coloured_large.jpg">
+            <img alt="moi_3" src="img/moi_large_sw.jpg">
+            <img alt="moi_4" src="img/moi_sw.jpg">
         </div>
         <div class="jumbotron">
             <div class = "container">
@@ -330,7 +357,7 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
                                             u.U. kann die Zip File durch den Download beschädigt und somit nicht extrahiert werden. In diesem Falle hilft <a href="https://www.diskinternals.com/zip-repair/" target="_blank">dieses</a> Tool weiter.
                                         </li>
                                     </ul>
-                                </div>
+                                </div>                        
                                 <div class="panel-footer">
                                     <div class="table-responsive">
                                         <table class="table table-condensed">
