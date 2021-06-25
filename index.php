@@ -192,26 +192,31 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
     </head>
     <body>
         <script>
-                var breiteCheck = window.innerWidth < 990 ? true : false;
-                if (breiteCheck) {
-                    var alertWidth = 350;
-                    var alertHeight = 200;
-                    var xAlertStart = screen.top;
-                    var yAlertStart = screen.left;
-                    var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
-                    var alertText = "<p class='pAlert'>Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!</p>";
-                    var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nApplikation wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
-                    confirm(ausgabe);
-                    open(location, '_self').close();
-                }
-                var output = detect();
-                document.body.innerHTML = output;
+    var breiteCheck = window.innerWidth < 990 ? true : false;
+    if (breiteCheck) {
+        /*
+         var alertWidth = 350;
+         var alertHeight = 200;
+         var xAlertStart = screen.top;
+         var yAlertStart = screen.left;
+         var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
+         var alertText = "<p class='pAlert'>Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!</p>";
+         */
+        var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nApplikation wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
+        confirm(ausgabe);
+        open(location, '_self').close();
+    }
+    var output = detect();
+    document.body.innerHTML = output;
         </script>     
         <script>
+            var fensterHoehe = window.innerHeight;
+            var fensterBreite = window.innerWidth;
+            fensterHoehe = fensterHoehe / 2 + 0.12 * fensterHoehe;
+            fensterBreite = fensterBreite / 3 - 0.02 * fensterBreite;
             $(document).ready(function () {
                 rotiere_pic(0);
             });
-
             function rotiere_pic(photo_aktuell) {
                 var anzahl = $('#photos img').length;
                 photo_aktuell = photo_aktuell % anzahl;
@@ -226,7 +231,8 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                         rotiere_pic(++photo_aktuell);
                     }, 750);
                 });
-                $("#photos img").css({position: 'absolute', top: '61%', left: '31%', height: '50pt', width: '80pt'});
+
+                $("#photos img").css({position: 'absolute', top: fensterHoehe, left: fensterBreite, height: '50pt', width: '80pt'});
             }
         </script>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
