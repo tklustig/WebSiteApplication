@@ -14,7 +14,6 @@ function dateiGroesse($file) {
     else {
         $size = filesize($file);
         $massEinheit = array("Byte", "KB", "MB");
-
         foreach ($massEinheit as $potenz => $Einheit) {
             if ($size / pow(1024, $potenz) < 1024)
                 return number_format($size / pow(1024, $potenz), 1, ",", ".") . ' ' . $Einheit;
@@ -89,127 +88,82 @@ $filename8 = 'SpaceShooter.zip';
 $filename9 = 'Halma.zip';
 $filename10 = 'Pacman.zip';
 $filename11 = 'Fibonacci.zip';
+$arCaptcha = array();
+$strCaptcha = "<p><font color='red'>Captcha inkorrekt. Bitte erneut lösen..</p><font color='black'>";
 
 if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gesendet wurde (= Ein Knopf gedrückt wurde)
     if (file_exists($filename1) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename1);
         $_SESSION['captchaIsSolved'] = false;
-    } else {
-        ?>
-        <script>
-            confirm('Bitte das Captcha korrekt eingeben');
-        </script>
-        <?php
-    }
+    } else
+        array_push($arCaptcha, $strCaptcha);
 } else if (!empty($_REQUEST["download2"])) {
     if (file_exists($filename2) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename2);
         $_SESSION['captchaIsSolved'] = false;
-    } else {
-        ?>
-        <script>
-            confirm('Bitte das Captcha korrekt eingeben');
-        </script>
-        <?php
-    }
+    } else
+        array_push($arCaptcha, $strCaptcha);
 } else if (!empty($_REQUEST["download3"])) {
     if (file_exists($filename2) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename3);
         $_SESSION['captchaIsSolved'] = false;
-    } else {
-        ?>
-        <script>
-            confirm('Bitte das Captcha korrekt eingeben');
-        </script>
-        <?php
-    }
+    } else
+        array_push($arCaptcha, $strCaptcha);
 } else if (!empty($_REQUEST["download4"])) {
     if (file_exists($filename4) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename4);
         $_SESSION['captchaIsSolved'] = false;
-    } else {
-        ?>
-        <script>
-            confirm('Bitte das Captcha korrekt eingeben');
-        </script>
-        <?php
-    }
+    } else
+        array_push($arCaptcha, $strCaptcha);
 } else if (!empty($_REQUEST["download5"])) {
     if (file_exists($filename5) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename5);
-    } else {
-        ?>
-        <script>
-            confirm('Bitte das Captcha korrekt eingeben');
-        </script>
-        <?php
-    }
+    } else
+        array_push($arCaptcha, $strCaptcha);
 } else if (!empty($_REQUEST["download6"])) {
     if (file_exists($filename6) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename6);
         $_SESSION['captchaIsSolved'] = false;
-    } else {
-        ?>
-        <script>
-            confirm('Bitte das Captcha korrekt eingeben');
-        </script>
-        <?php
-    }
+    } else
+        array_push($arCaptcha, $strCaptcha);
 } else if (!empty($_REQUEST["download7"])) {
     if (file_exists($filename7) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename7);
         $_SESSION['captchaIsSolved'] = false;
-    } else {
-        ?>
-        <script>
-            confirm('Bitte das Captcha korrekt eingeben');
-        </script>
-        <?php
-    }
+    } else
+        array_push($arCaptcha, $strCaptcha);
 } else if (!empty($_REQUEST["download8"])) {
     if (file_exists($filename8) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename8);
         $_SESSION['captchaIsSolved'] = false;
-    } else {
-        ?>
-        <script>
-            confirm('Bitte das Captcha korrekt eingeben');
-        </script>
-        <?php
-    }
+    } else
+        array_push($arCaptcha, $strCaptcha);
 } else if (!empty($_REQUEST["download9"])) {
     if (file_exists($filename9) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename9);
         $_SESSION['captchaIsSolved'] = false;
-    } else {
-        ?>
-        <script>
-            confirm('Bitte das Captcha korrekt eingeben');
-        </script>
-        <?php
-    }
+    } else
+        array_push($arCaptcha, $strCaptcha);
 } else if (!empty($_REQUEST["download10"])) {
     if (file_exists($filename10) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename10);
         $_SESSION['captchaIsSolved'] = false;
-    } else {
-        ?>
-        <script>
-            confirm('Bitte das Captcha korrekt eingeben');
-        </script>
-        <?php
-    }
+    } else
+        array_push($arCaptcha, $strCaptcha);
 } else if (!empty($_REQUEST["download11"])) {
     if (file_exists($filename11) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename11);
         $_SESSION['captchaIsSolved'] = false;
-    } else {
-        ?>
-        <script>
-            confirm('Bitte das Captcha korrekt eingeben');
-        </script>
-        <?php
-    }
+    } else
+        array_push($arCaptcha, $strCaptcha);
+}
+//verarbeite Trigger1:Absenden-Submitbutton wurde gepusht und Messagebox ist nicht leer
+if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
+    if (isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
+        senden($_REQUEST['MsgBox']);
+        $_SESSION['captchaIsSolved'] = false;
+    } else
+        array_push($arCaptcha, $strCaptcha);
 }
 ?>
 <!DOCTYPE html>
@@ -238,20 +192,20 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
     </head>
     <body>
         <script>
-            var breiteCheck = window.innerWidth < 990 ? true : false;
-            if (breiteCheck) {
-                var alertWidth = 350;
-                var alertHeight = 200;
-                var xAlertStart = screen.top;
-                var yAlertStart = screen.left;
-                var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
-                var alertText = "<p class='pAlert'>Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!</p>";
-                var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nApplikation wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
-                confirm(ausgabe);
-                open(location, '_self').close();
-            }
-            var output = detect();
-            document.body.innerHTML = output;
+                var breiteCheck = window.innerWidth < 990 ? true : false;
+                if (breiteCheck) {
+                    var alertWidth = 350;
+                    var alertHeight = 200;
+                    var xAlertStart = screen.top;
+                    var yAlertStart = screen.left;
+                    var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
+                    var alertText = "<p class='pAlert'>Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!</p>";
+                    var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nApplikation wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
+                    confirm(ausgabe);
+                    open(location, '_self').close();
+                }
+                var output = detect();
+                document.body.innerHTML = output;
         </script>     
         <script>
             $(document).ready(function () {
@@ -272,7 +226,7 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
                         rotiere_pic(++photo_aktuell);
                     }, 750);
                 });
-                $("#photos img").css({position: 'absolute', top: '18%', right: '4%', height: '50pt', width: '80pt'});
+                $("#photos img").css({position: 'absolute', top: '61%', left: '31%', height: '50pt', width: '80pt'});
             }
         </script>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -305,11 +259,12 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
         <div class="col-md-12">
             <img class="imgCounter" src="counter.php" title="Pic1" alt="Picture1">
         </div>
-        <div id="photos"><!-- Die CSS Anweisungen werden in der JS Funktion rotiere_pic() über den css Selektor implementiert -->
-            <img alt="moi_1" src="img/moi_coloured.jpg">
-            <img alt="moi_2" src="img/moi_coloured_large.jpg">
-            <img alt="moi_3" src="img/moi_large_sw.jpg">
-            <img alt="moi_4" src="img/moi_sw.jpg">
+        <div class="col-md-12">
+            <?php
+            if (!empty($arCaptcha)) {
+                echo $arCaptcha[0];
+            }
+            ?>
         </div>
         <div class="jumbotron">
             <div class = "container">
@@ -322,7 +277,7 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Nachrichten hier!</label>
+                                <label>MessageBox:</label>
                                 <textarea  rows="6"cols="175" id="comment"  name="MsgBox" placeholder="MessageBox:Nachrichten hier!"><?php
                                     if (!empty($_REQUEST['MsgBox'])) {
                                         echo $_REQUEST['MsgBox'];
@@ -333,9 +288,8 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
                                     CKEDITOR.replace('comment');
                                 </script>
                             </div>                     
-                            <br>
                             <input type="submit" name="message" class="btn btn-success btn-sm"  value="Absenden">
-                            <button class="btn btn-primary btn-sm" onclick="Reload()">Reload Page</button>
+                            <button class="btn btn-primary btn-sm" onclick="Reload()">Reload Page</button><br /><br />
                         </div>               
                         <input class="solve" type=text name="cap" placeholder="Captcha:">
                         <input class="butCap" type="submit" name="push" value="Captcha prüfen">  
@@ -344,9 +298,9 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
                                 <div class="panel-body">
                                     <div class="alert alert-info" role="alert"><strong>Lösen Sie zunächst das Captcha</strong> und Pushen Sie sodann auf einen der Downloadbuttons, um die entsprechende Applikation runterzuladen. Entpacken Sie die komprimierte Datei in einen beliebigen Ordner und starten Sie die jeweilige EXE-Datei.</div>
                                     <ul>
-                                        <li>
-                                            Steuern Sie unter 'My Websites' auch meine Webseiten an. Letztere ist kostenpflichtig, alle anderen sind Open Source.
-                                        </li>
+                                        <strong> <li>
+                                                Steuern Sie unter 'My Websites' auch meine Webseiten an. Letztere sind kostenpflichtig, alle anderen Open Source.
+                                            </li></strong>
                                         <li>
                                             Bei Problemen lesen Sie - sofern vorhanden- die ReadmeFirst.txt aufmerksam durch
                                         </li>
@@ -466,20 +420,8 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
         }
     </script>
     <?php
-//verarbeite Trigger1: Absenden-Submitbutton wurde gepusht und Messagebox ist nicht leer
-    if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
-        if (isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
-            senden($_REQUEST['MsgBox']);
-            $_SESSION['captchaIsSolved'] = false;
-        } else {
-            ?>
-            <script>
-                confirm('Bitte das Captcha korrekt eingeben');
-            </script>
-            <?php
-        }
-        //verarbeite Trigger2:Absenden-Submitbutton wurde gepusht und Messagebox ist leer
-    } else if (isset($_REQUEST['message']) && empty($_REQUEST['MsgBox'])) {
+//verarbeite Trigger2: Absenden-Submitbutton wurde gepusht und Messagebox ist leer
+    if (isset($_REQUEST['message']) && empty($_REQUEST['MsgBox'])) {
         ?>
         <script>
             var alertWidth = 350;
@@ -522,7 +464,7 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
             </script>
             <?php
             $_SESSION['captchaIsSolved'] = true;
-            //verarbeite Trigger5:Captcha wurde inkorrekt eingegeben
+            //verarbeite Trigger4.2:Captcha wurde inkorrekt eingegeben
         } else {
             ?>
             <script>
@@ -549,6 +491,12 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
       unset($element);
       } */
     ?>
+    <div id="photos"><!-- Die CSS Anweisungen werden in der JS Funktion rotiere_pic() über den css Selektor implementiert -->
+        <img alt="moi_1" src="img/moi_coloured.jpg">
+        <img alt="moi_2" src="img/moi_coloured_large.jpg">
+        <img alt="moi_3" src="img/moi_large_sw.jpg">
+        <img alt="moi_4" src="img/moi_sw.jpg">
+    </div>
 </body>
 </html>
 
