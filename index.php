@@ -239,10 +239,10 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
         <div class="jumbotron">
             <div class="container">
                 <div class="row">         
-                    <div class="col-auto mr-auto">
+                    <div class="col-lg-3">
                         <img  src="counter.php" title="Pic1" alt="Picture1" />
                     </div>
-                    <div class="col-auto"  id="photos"><!-- Die Rotation werden in der JQuery Funktion über den Selektor id in rotiere_pic() implementiert -->
+                    <div class="col-lg-1 offset-lg-8"  id="photos"><!-- Die Rotation werden in der JQuery Funktion über den Selektor id in rotiere_pic() implementiert -->
                         <img alt="moi_1" src="img/moi_coloured.jpg">
                         <img alt="moi_2" src="img/moi_coloured_large.jpg">
                         <img alt="moi_3" src="img/moi_large_sw.jpg">
