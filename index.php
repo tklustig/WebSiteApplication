@@ -224,8 +224,8 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                             Home
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">      
-                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="phpinfo.php" target="_blank">PHP Info</a>
+                            <a class="dropdown-item" href='#' onclick="impressum()">Impressum</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
@@ -416,6 +416,11 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
             function Reload() {
                 alert("Inhalt wird über JavaScript neu geladen...");
                 location.reload();
+            }
+
+            function impressum() {
+                var alertText = "V.i.S.d.P: Kipp, Thomas\nAm Wall 50-54\n28195 Bremen";
+                confirm(alertText);
             }
         </script>
         <?php
