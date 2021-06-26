@@ -179,7 +179,12 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
             }
             var output = detect();
             document.body.innerHTML = output;
-        </script>     
+        </script>
+        <?php
+        if (!empty($arCaptcha)) {
+            echo $arCaptcha[0];
+        }
+        ?>
         <script>
             /*var fensterHoehe = window.innerHeight;
              var fensterBreite = window.innerWidth;*/
@@ -233,15 +238,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
         </nav>
         <div class="jumbotron">
             <div class="container">
-                <div class="row">    
-                    <div class="col-md-12">
-                        <?php
-                        if (!empty($arCaptcha)) {
-                            echo $arCaptcha[0];
-                        }
-                        ?>
-                    </div>
-
+                <div class="row">         
                     <div class="col-auto mr-auto">
                         <img  src="counter.php" title="Pic1" alt="Picture1" />
                     </div>
