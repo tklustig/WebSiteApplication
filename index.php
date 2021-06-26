@@ -173,11 +173,18 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
         <script>
             var breiteCheck = window.innerWidth < 990 ? true : false;
             if (breiteCheck) {
-                var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nApplikation wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
-                confirm(ausgabe);
+                var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nAufruf wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
+                alert(ausgabe);
                 open(location, '_self').close();
             }
             var output = detect();
+            var IE = "Internet Explorer";
+            if (output.trim() === IE.trim()) {
+                var ausgabe = "Der Internet Explorer ist der einzige Browser, der von dieser Applikation nicht unterstützt wird.\nAufruf wird blockiert, bis ein anderer Browser verwendet wird!";
+                alert(ausgabe);
+                open(location, '_self').close();
+            }
+            output += " is using surfing in Internet";
             document.body.innerHTML = output;
         </script>
         <?php
