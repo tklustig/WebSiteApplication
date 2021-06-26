@@ -1,5 +1,6 @@
 <?php
 session_start();
+$arCaptcha = array();
 
 function makeDownload($file) {
     header("Content-Disposition: attachment; filename=\"$file\"");
@@ -23,6 +24,7 @@ function dateiGroesse($file) {
 
 function senden($content) {
     try {
+        global $arCaptcha;
         $heute = date("Y-m-d H:i:s");
         $to = 'kipp.thomas@tklustig.de';
         $subject = 'Installationsprobleme u.a.';
@@ -36,37 +38,15 @@ function senden($content) {
                 'X-Mailer: PHP/' . phpversion();
         $umlaute = array("ä", "ö", "ü", "Ä", "Ö", "Ü", "ß");
         $ersetzen = array("ae", "oe", "ue", "Ae", "Oe", "Ue", "ss");
-        $send_mail = str_replace($umlaute, $ersetzen, $nachricht);
-        $success = mail($to, $subject, $send_mail, $header);
+        $sendMail = str_replace($umlaute, $ersetzen, $nachricht);
         $datei = fopen("nachricht.txt", "a+");
         $ausgabe = "$nachricht\r\n";
-        if ($success) {
-            echo"<p>Folgende Parameter wurden verschickt:<br>Empfänger:$to<br>Betreff: $subject<br>$nachricht</p>";
-            echo"<h4>$header</h4>";
-            ?>
-            <script>
-                var alertWidth = 350;
-                var alertHeight = 200;
-                var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
-                var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
-                var alertTitle = "<p class='pTitle'><strong>! Info !</strong></p>";
-                var alertText = "<p class='pAlert'>Nachricht wurde verschickt -siehe ganz unten-</p>";
-                showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
-            </script>
-            <?php
+        if (mail($to, $subject, $sendMail, $header)) {
+            $strCaptcha = "<p>eine neue Message vom " . $heute . " Uhr wurde an $to verschickt.</p>";
+            array_push($arCaptcha, $strCaptcha);
         } else {
-            //echo'<p> Die Mail konnte nicht verschickt werden';
-            ?>
-            <script>
-                var alertWidth = 350;
-                var alertHeight = 200;
-                var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
-                var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
-                var alertTitle = "<p class='pTitle'><strong>! Error !</strong></p>";
-                var alertText = "<p class='pAlert'>Die Mail konnte nicht verschickt werden</p>";
-                showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
-            </script>
-            <?php
+            $strCaptcha = "<p><font color='red'>Mailerror. Mail konnte nicht verschickt werden!</p><font color='black'>";
+            array_push($arCaptcha, $strCaptcha);
         }
         fputs($datei, $heute);
         fputs($datei, $ausgabe); // schreibt die Nachricht i.d.Datei
@@ -88,8 +68,7 @@ $filename8 = 'SpaceShooter.zip';
 $filename9 = 'Halma.zip';
 $filename10 = 'Pacman.zip';
 $filename11 = 'Fibonacci.zip';
-$arCaptcha = array();
-$strCaptcha = "<p><font color='red'>Captcha inkorrekt. Bitte erneut lösen..</p><font color='black'>";
+$strCaptcha = "<p><font color='red'>Captcha inkorrekt. Bitte lösen..</p><font color='black'>";
 
 if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gesendet wurde (= Ein Knopf gedrückt wurde)
     if (file_exists($filename1) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
@@ -192,28 +171,18 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
     </head>
     <body>
         <script>
-    var breiteCheck = window.innerWidth < 990 ? true : false;
-    if (breiteCheck) {
-        /*
-         var alertWidth = 350;
-         var alertHeight = 200;
-         var xAlertStart = screen.top;
-         var yAlertStart = screen.left;
-         var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
-         var alertText = "<p class='pAlert'>Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!</p>";
-         */
-        var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nApplikation wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
-        confirm(ausgabe);
-        open(location, '_self').close();
-    }
-    var output = detect();
-    document.body.innerHTML = output;
+            var breiteCheck = window.innerWidth < 990 ? true : false;
+            if (breiteCheck) {
+                var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nApplikation wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
+                confirm(ausgabe);
+                open(location, '_self').close();
+            }
+            var output = detect();
+            document.body.innerHTML = output;
         </script>     
         <script>
-            var fensterHoehe = window.innerHeight;
-            var fensterBreite = window.innerWidth;
-            fensterHoehe = fensterHoehe / 2 + 0.12 * fensterHoehe;
-            fensterBreite = fensterBreite / 3 - 0.02 * fensterBreite;
+            /*var fensterHoehe = window.innerHeight;
+             var fensterBreite = window.innerWidth;*/
             $(document).ready(function () {
                 rotiere_pic(0);
             });
@@ -232,7 +201,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                     }, 750);
                 });
 
-                $("#photos img").css({position: 'absolute', top: fensterHoehe, left: fensterBreite, height: '50pt', width: '80pt'});
+                $("#photos img").css({position: 'absolute', height: '67px', width: '107px'});
             }
         </script>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -262,20 +231,27 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                 </ul>
             </div>
         </nav>
-        <div class="col-md-12">
-            <img class="imgCounter" src="counter.php" title="Pic1" alt="Picture1">
-        </div>
-        <div class="col-md-12">
-            <?php
-            if (!empty($arCaptcha)) {
-                echo $arCaptcha[0];
-            }
-            ?>
-        </div>
         <div class="jumbotron">
-            <div class = "container">
-                <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" class="form-inline" method="post">
-                    <div class="row">                                                  
+            <div class="container">
+                <div class="row">    
+                    <div class="col-md-12">
+                        <?php
+                        if (!empty($arCaptcha)) {
+                            echo $arCaptcha[0];
+                        }
+                        ?>
+                    </div>
+
+                    <div class="col-auto mr-auto">
+                        <img  src="counter.php" title="Pic1" alt="Picture1" />
+                    </div>
+                    <div class="col-auto"  id="photos"><!-- Die Rotation werden in der JQuery Funktion über den Selektor id in rotiere_pic() implementiert -->
+                        <img alt="moi_1" src="img/moi_coloured.jpg">
+                        <img alt="moi_2" src="img/moi_coloured_large.jpg">
+                        <img alt="moi_3" src="img/moi_large_sw.jpg">
+                        <img alt="moi_4" src="img/moi_sw.jpg">
+                    </div>  
+                    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" class="form-inline" method="post">          
                         <div class="col-md-6">
                             <div class="page-header">
                                 <h2>Downloadbereich <small>Laden Sie meine Applikationen runter.... </small></h2>
@@ -414,64 +390,33 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                                 </div>
                             </div>
                         </div> 
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </form>
-    <script>
-        function Reload() {
-            alert("Inhalt wird über JavaScript neu geladen...");
-            location.reload();
-        }
-    </script>
-    <?php
+        <script>
+            function Reload() {
+                alert("Inhalt wird über JavaScript neu geladen...");
+                location.reload();
+            }
+        </script>
+        <?php
 //verarbeite Trigger2: Absenden-Submitbutton wurde gepusht und Messagebox ist leer
-    if (isset($_REQUEST['message']) && empty($_REQUEST['MsgBox'])) {
-        ?>
-        <script>
-            var alertWidth = 350;
-            var alertHeight = 200;
-            var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
-            var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
-            var alertTitle = "<p class='pTitle'><strong>! Warnung !</p></strong>";
-            var alertText = "<label class='pAlert'>Bitte vermeiden Sie unnötigen Traffic und schreiben Sie eine Nachricht.</label>";
-            showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
-        </script>
-        <?php
-    }
-    //verarbeite Trigger3: Check-Submittbutton wurde gedrückt und Captchabox ist leer
-    if (isset($_REQUEST['push']) && empty($_REQUEST['cap'])) {
-        ?>
-        <script>
-            var alertWidth = 350;
-            var alertHeight = 200;
-            var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
-            var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
-            var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
-            var alertText = "<p class='pAlert'>Bitte Captchacode eingeben</p>";
-            showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
-        </script>
-        <?php
-        $_SESSION['captchaIsSolved'] = false;
-        //verarbeite Trigger4:Check-Submitbutton wurde gedrückt und Captchbox ist nicht leer
-    } else if (isset($_REQUEST['push']) && !empty($_REQUEST['cap'])) {
-        //verarbeite Trigger4.1:Captcha wurde korrekt eingegeben
-        if (isset($_SESSION['captcha']) && $_REQUEST['cap'] == $_SESSION['captcha']['code']) {
+        if (isset($_REQUEST['message']) && empty($_REQUEST['MsgBox'])) {
             ?>
             <script>
                 var alertWidth = 350;
                 var alertHeight = 200;
                 var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
                 var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
-                var alertTitle = "<p class='pTitle'><strong>! Success !</strong></p>";
-                var alertText = "<p class='pAlert'>Captcha wurde gelöst</p>";
+                var alertTitle = "<p class='pTitle'><strong>! Warnung !</p></strong>";
+                var alertText = "<label class='pAlert'>Bitte vermeiden Sie unnötigen Traffic und schreiben Sie eine Nachricht.</label>";
                 showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
             </script>
             <?php
-            $_SESSION['captchaIsSolved'] = true;
-            //verarbeite Trigger4.2:Captcha wurde inkorrekt eingegeben
-        } else {
+        }
+//verarbeite Trigger3: Check-Submittbutton wurde gedrückt und Captchabox ist leer
+        if (isset($_REQUEST['push']) && empty($_REQUEST['cap'])) {
             ?>
             <script>
                 var alertWidth = 350;
@@ -479,30 +424,54 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                 var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
                 var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
                 var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
-                var alertText = "<p class='pAlert'>Captcha wurde nicht gelöst";
+                var alertText = "<p class='pAlert'>Bitte Captchacode eingeben</p>";
                 showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
             </script>
             <?php
             $_SESSION['captchaIsSolved'] = false;
+            //verarbeite Trigger4:Check-Submitbutton wurde gedrückt und Captchbox ist nicht leer
+        } else if (isset($_REQUEST['push']) && !empty($_REQUEST['cap'])) {
+            //verarbeite Trigger4.1:Captcha wurde korrekt eingegeben
+            if (isset($_SESSION['captcha']) && $_REQUEST['cap'] == $_SESSION['captcha']['code']) {
+                ?>
+                <script>
+                    var alertWidth = 350;
+                    var alertHeight = 200;
+                    var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
+                    var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
+                    var alertTitle = "<p class='pTitle'><strong>! Success !</strong></p>";
+                    var alertText = "<p class='pAlert'>Captcha wurde gelöst</p>";
+                    showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
+                </script>
+                <?php
+                $_SESSION['captchaIsSolved'] = true;
+                //verarbeite Trigger4.2:Captcha wurde inkorrekt eingegeben
+            } else {
+                ?>
+                <script>
+                    var alertWidth = 350;
+                    var alertHeight = 200;
+                    var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
+                    var yAlertStart = window.innerHeight / 2 - alertHeight / 2;
+                    var alertTitle = "<p class='pTitle'><strong>! Warnung !</strong></p>";
+                    var alertText = "<p class='pAlert'>Captcha wurde nicht gelöst";
+                    showAlert(alertWidth, alertHeight, xAlertStart, yAlertStart, alertTitle, alertText);
+                </script>
+                <?php
+                $_SESSION['captchaIsSolved'] = false;
+            }
         }
-    }
-    require_once ("SimplePhpCaptcha.php");
-    $_SESSION['captcha'] = simple_php_captcha();
-    $captcha = '<img class="imgCaptcha" src="' . $_SESSION['captcha']['image_src'] . '" alt="CAPTCHA code">';
-    echo $captcha;
-    if (!empty($_REQUEST))
-        $_REQUEST = array();
-    /* alternativ 
-      foreach ($_REQUEST as $element) {
-      unset($element);
-      } */
-    ?>
-    <div id="photos"><!-- Die CSS Anweisungen werden in der JS Funktion rotiere_pic() über den css Selektor implementiert -->
-        <img alt="moi_1" src="img/moi_coloured.jpg">
-        <img alt="moi_2" src="img/moi_coloured_large.jpg">
-        <img alt="moi_3" src="img/moi_large_sw.jpg">
-        <img alt="moi_4" src="img/moi_sw.jpg">
-    </div>
-</body>
+        require_once ("SimplePhpCaptcha.php");
+        $_SESSION['captcha'] = simple_php_captcha();
+        $captcha = '<img class="imgCaptcha" src="' . $_SESSION['captcha']['image_src'] . '" alt="CAPTCHA code">';
+        echo $captcha;
+        if (!empty($_REQUEST))
+            $_REQUEST = array();
+        /* alternativ 
+          foreach ($_REQUEST as $element) {
+          unset($element);
+          } */
+        ?>
+    </body>
 </html>
 
