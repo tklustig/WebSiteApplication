@@ -249,12 +249,12 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                         <img alt="moi_4" src="img/moi_sw.jpg">
                     </div>  
                     <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" class="form-inline" method="post">          
-                        <div class="col-md-6">
+                        <div class="col-lg-6">
                             <div class="page-header">
                                 <h2>Downloadbereich <small>Laden Sie meine Applikationen runter.... </small></h2>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-lg-6">
                             <div class="form-group">
                                 <label>MessageBox:</label>
                                 <textarea  rows="6"cols="175" id="comment"  name="MsgBox" placeholder="MessageBox:Nachrichten hier!"><?php
@@ -269,12 +269,26 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                             </div>                     
                             <input type="submit" name="message" class="btn btn-success btn-sm"  value="Absenden">
                             <button class="btn btn-primary btn-sm" onclick="Reload()">Reload Page</button><br /><br />
-                        </div>               
-                        <input class="solve" type=text name="cap" placeholder="Captcha:">
-                        <input class="butCap" type="submit" name="push" value="Captcha prüfen">  
+                        </div>
+                        <div class="col-sm-3">
+                            <?php
+                            require_once ("SimplePhpCaptcha.php");
+                            $_SESSION['captcha'] = simple_php_captcha();
+                            $captcha = '<img  src="' . $_SESSION['captcha']['image_src'] . '" alt="CAPTCHA code">';
+                            ?>
+                            <?= $captcha ?>
+                        </div>
+                        <div class="col-sm-3">
+                            <input class="solve" type=text name="cap" placeholder="Captcha hier eingeben:">
+                        </div>
+                        <div class="col-sm-1">
+                            <input class="butCap" type="submit" name="push" value="Captcha prüfen"> 
+                        </div>
+                        <div class="col-sm-5"></div>
                         <div class="well">
                             <div class="panel panel-default">
                                 <div class="panel-body">
+                                    <br><br>
                                     <div class="alert alert-info" role="alert"><strong>Lösen Sie zunächst das Captcha</strong> und Pushen Sie sodann auf einen der Downloadbuttons, um die entsprechende Applikation runterzuladen. Entpacken Sie die komprimierte Datei in einen beliebigen Ordner und starten Sie die jeweilige EXE-Datei.</div>
                                     <ul>
                                         <strong> <li>
@@ -390,7 +404,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                     </form>
                 </div>
             </div>
-        </div>
+        </div>      
         <script>
             function Reload() {
                 alert("Inhalt wird über JavaScript neu geladen...");
@@ -458,10 +472,6 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                 $_SESSION['captchaIsSolved'] = false;
             }
         }
-        require_once ("SimplePhpCaptcha.php");
-        $_SESSION['captcha'] = simple_php_captcha();
-        $captcha = '<img class="imgCaptcha" src="' . $_SESSION['captcha']['image_src'] . '" alt="CAPTCHA code">';
-        echo $captcha;
         if (!empty($_REQUEST))
             $_REQUEST = array();
         /* alternativ 
