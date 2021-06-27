@@ -68,7 +68,7 @@ $filename8 = 'SpaceShooter.zip';
 $filename9 = 'Halma.zip';
 $filename10 = 'Pacman.zip';
 $filename11 = 'Fibonacci.zip';
-$strCaptcha = "<p><font color='red'>Captcha inkorrekt. Bitte lösen..</p><font color='black'>";
+$strCaptcha = "<div id='idLabel'>Captcha inkorrekt. Bitte lösen..</div>";
 
 if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gesendet wurde (= Ein Knopf gedrückt wurde)
     if (file_exists($filename1) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
@@ -152,29 +152,29 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
         <meta name='viewport' content='width=device-width, initial-scale=1'>
         <meta charset='utf-8'><!-- charset[utf-8:]  definiert den deutschen Zeichensatz -->
         <meta name='msvalidate.01' content='8B12875037645A4090EE64488042FDA9' /><!--validiert die Website für Bing und Yahoo-->
-        <meta name='date' content='2017-02-3T08:49:37+02:00'>		<!-- Angaben, wann die Seite publiziert wurde-->
+        <meta name='date' content='2021-05-3T08:49:37+02:00'>		<!-- Angaben, wann die Seite publiziert wurde-->
         <meta name='keywords' content='DownloadArea'>	<!-- versorgt die Spider der Suchmaschinen mit Informationen zwecks Suchbegriffen -->
         <meta name='description' content='WebSites, Download'>	<!-- Beschreibung, die in den Suchmaschinen erscheinen soll. -->
-        <meta name='robots' content='index,follow'>			<!-- Links sollen mitindiziert werden //NOINDEX:Seite soll nicht aufgenommen werden//NOFOLLOW Links werden nicht verfolgt-->
+        <meta name='robots' content='INDEX,NOFOLLOW'>			<!-- Links sollen mitindiziert werden //NOINDEX:Seite soll nicht aufgenommen werden//NOFOLLOW Links werden nicht verfolgt-->
         <meta name='audience' content='alle'>				<!-- definiert die Zielgruppe der Website  -->
         <meta name='page-topic' content='Dienstleistung'>		<!-- Zuordnungsdefinition für die Suchmaschine -->
-        <meta name='revisit-after' CONTENT='7 days'>			<!-- definiert den erneuten Besuch des Spiders//hier:nach sieben Tagen  -->
+        <meta name='revisit-after' CONTENT='5 days'>			<!-- definiert den erneuten Besuch des Spiders//hier:nach sieben Tagen  -->
         <title>Download Area</title>
-        <script src="https://code.jquery.com/jquery-latest.js"></script>
+        <script language='JavaScript' src="https://code.jquery.com/jquery-latest.js"></script>                  
+        <script language='JavaScript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy' crossorigin='anonymous'></script>
+        <script language='JavaScript' src='plugin/ckeditor/ckeditor.js'></script>
+        <script language='JavaScript' src='js/Alert.js'></script>
+        <script language='JavaScript' src='js/detectBrowser.js'></script>
         <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' crossorigin='anonymous'>
-        <link rel='icon' href='data:;base64,iVBORw0KGgo='>              
-        <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy' crossorigin='anonymous'></script>
-        <script src='plugin/ckeditor/ckeditor.js'></script>
-        <script src='js/Alert.js'></script>
-        <script src='js/detectBrowser.js'></script>
-        <link href='css/style.css' rel='stylesheet'>
+        <link rel='stylesheet' href='css/style.css' rel='stylesheet'>
+        <link rel='icon' href='data:;base64,iVBORw0KGgo='>        
     </head>
     <body>
         <script language="JavaScript">
             var output;
             output = detect();
             var breiteCheck = window.innerWidth < 990 ? true : false;
-            var IE = "Internet Explorer";
+            IE = "Internet Explorer";
             if (breiteCheck) {
                 var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nAufruf wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
                 alert(ausgabe);
@@ -190,9 +190,8 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
             document.body.innerHTML = output;
         </script>
         <?php
-        if (!empty($arCaptcha)) {
+        if (!empty($arCaptcha))
             echo $arCaptcha[0];
-        }
         ?>
         <script language="JavaScript">
             /*var fensterHoehe = window.innerHeight;
@@ -267,10 +266,10 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                             <div class="form-group">
                                 <label>MessageBox:</label>
                                 <textarea  rows="6"cols="175" id="comment"  name="MsgBox" placeholder="MessageBox:Nachrichten hier!"><?php
-                                    if (!empty($_REQUEST['MsgBox'])) {
-                                        echo $_REQUEST['MsgBox'];
-                                    }
-                                    ?>
+        if (!empty($_REQUEST['MsgBox'])) {
+            echo $_REQUEST['MsgBox'];
+        }
+        ?>
                                 </textarea>
                                 <script language="JavaScript">
                                     CKEDITOR.replace('comment');
@@ -289,10 +288,10 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                             <?= $showCaptcha ?>
                         </div>
                         <div class="col-sm-3">
-                            <input class="solve" type=text name="cap" placeholder="Captcha hier eingeben:">
+                            <input type=text name="cap" placeholder="Captcha hier eingeben:">
                         </div>
                         <div class="col-sm-1">
-                            <input class="butCap" type="submit" name="push" value="Captcha prüfen"> 
+                            <input type="submit" name="push" value="Captcha prüfen"> 
                         </div>
                         <div class="col-sm-5"></div>
                         <div class="well">
