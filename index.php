@@ -170,16 +170,18 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
         <link href='css/style.css' rel='stylesheet'>
     </head>
     <body>
-        <script>
+        <script language="JavaScript">
+            var output;
+            output = detect();
             var breiteCheck = window.innerWidth < 990 ? true : false;
+            var IE = "Internet Explorer";
             if (breiteCheck) {
                 var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nAufruf wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
                 alert(ausgabe);
                 open(location, '_self').close();
-            }
-            var output = detect();
-            var IE = "Internet Explorer";
-            if (output.trim() === IE.trim()) {
+            } else if (output == null) {
+                output = "Unknown Browser"
+            } else if (output.trim() === IE.trim()) {
                 var ausgabe = "Der Internet Explorer ist der einzige Browser, der von dieser Applikation nicht unterstützt wird.\nAufruf wird blockiert, bis ein anderer Browser verwendet wird!";
                 alert(ausgabe);
                 open(location, '_self').close();
@@ -192,7 +194,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
             echo $arCaptcha[0];
         }
         ?>
-        <script>
+        <script language="JavaScript">
             /*var fensterHoehe = window.innerHeight;
              var fensterBreite = window.innerWidth;*/
             $(document).ready(function () {
@@ -270,7 +272,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                                     }
                                     ?>
                                 </textarea>
-                                <script>
+                                <script language="JavaScript">
                                     CKEDITOR.replace('comment');
                                 </script>
                             </div>                     
@@ -280,10 +282,11 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                         <div class="col-sm-3">
                             <?php
                             require_once ("SimplePhpCaptcha.php");
-                            $_SESSION['captcha'] = simple_php_captcha();
-                            $captcha = '<img  src="' . $_SESSION['captcha']['image_src'] . '" alt="CAPTCHA code">';
+                            $captcha['captcha'] = simple_php_captcha();
+                            //$_SESSION['captcha'] = simple_php_captcha();
+                            $showCaptcha = '<img  src="' . $captcha['captcha']['image_src'] . '" alt="CAPTCHA code">';
                             ?>
-                            <?= $captcha ?>
+                            <?= $showCaptcha ?>
                         </div>
                         <div class="col-sm-3">
                             <input class="solve" type=text name="cap" placeholder="Captcha hier eingeben:">
@@ -412,7 +415,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                 </div>
             </div>
         </div>      
-        <script>
+        <script language="JavaScript">
             function Reload() {
                 alert("Inhalt wird über JavaScript neu geladen...");
                 location.reload();
@@ -427,7 +430,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
 //verarbeite Trigger2: Absenden-Submitbutton wurde gepusht und Messagebox ist leer
         if (isset($_REQUEST['message']) && empty($_REQUEST['MsgBox'])) {
             ?>
-            <script>
+            <script language="JavaScript">
                 var alertWidth = 350;
                 var alertHeight = 200;
                 var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
@@ -441,7 +444,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
 //verarbeite Trigger3: Check-Submittbutton wurde gedrückt und Captchabox ist leer
         if (isset($_REQUEST['push']) && empty($_REQUEST['cap'])) {
             ?>
-            <script>
+            <script language="JavaScript">
                 var alertWidth = 350;
                 var alertHeight = 200;
                 var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
@@ -457,7 +460,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
             //verarbeite Trigger4.1:Captcha wurde korrekt eingegeben
             if (isset($_SESSION['captcha']) && $_REQUEST['cap'] == $_SESSION['captcha']['code']) {
                 ?>
-                <script>
+                <script language="JavaScript">
                     var alertWidth = 350;
                     var alertHeight = 200;
                     var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
@@ -471,7 +474,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                 //verarbeite Trigger4.2:Captcha wurde inkorrekt eingegeben
             } else {
                 ?>
-                <script>
+                <script language="JavaScript">
                     var alertWidth = 350;
                     var alertHeight = 200;
                     var xAlertStart = window.innerWidth / 2 - alertWidth / 2;
@@ -490,6 +493,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
           foreach ($_REQUEST as $element) {
           unset($element);
           } */
+        $_SESSION['captcha'] = $captcha['captcha'];
         ?>
     </body>
 </html>
