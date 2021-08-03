@@ -264,6 +264,7 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">      
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="phpinfo.php" target="_blank">PHP Info</a>
+                            <a class="dropdown-item" href='pdfservlet/docs/Datenschutzerklaerung.pdf' target='_blank'>Impressum</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
