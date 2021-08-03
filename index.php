@@ -226,11 +226,8 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">      
                             <a class="dropdown-item" href="phpinfo.php" target="_blank">PHP Info</a>
-<<<<<<< HEAD
                             <a class="dropdown-item" href='pdfservlet/docs/Datenschutzerklaerung.pdf' target='_blank'>Impressum</a>
-=======
                             <a class="dropdown-item" href='#' onclick="impressum()">Impressum</a>
->>>>>>> origin/master
                         </div>
                     </li>
                     <li class="nav-item dropdown">
