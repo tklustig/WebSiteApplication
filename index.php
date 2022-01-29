@@ -41,19 +41,18 @@ function senden($content) {
         $sendMail = str_replace($umlaute, $ersetzen, $nachricht);
         $datei = fopen("nachricht.txt", "a+");
         $ausgabe = "$nachricht\r\n";
-        if (mail($to, $subject, $sendMail, $header)) {
-            $strCaptcha = "<p>eine neue Message vom " . $heute . " Uhr wurde an $to verschickt.</p>";
-            array_push($arCaptcha, $strCaptcha);
-        } else {
-            $strCaptcha = "<p><font color='red'>Mailerror. Mail konnte nicht verschickt werden!</p><font color='black'>";
-            array_push($arCaptcha, $strCaptcha);
-        }
+        if (mail($to, $subject, $sendMail, $header)) 
+            $strCaptcha = "<p>eine neue Message vom $heute Uhr wurde an $to verschickt.</p>";          
+         else 
+            $strCaptcha = "<p><font color='red'>Mailerror. Mail konnte nicht verschickt werden!</p><font color='black'>";          
+		array_push($arCaptcha, $strCaptcha);
         fputs($datei, $heute);
         fputs($datei, $ausgabe); // schreibt die Nachricht i.d.Datei
         fclose($datei);
+		return true;
     } catch (Exception $e) {
         print_r($e->getMessage() . ' at line ' . $e->getLine() . ' in file ' . $e->getFile());
-        return;
+        return false;
     }
 }
 
@@ -158,7 +157,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
         <meta name='robots' content='INDEX,NOFOLLOW'>			<!-- Links sollen mitindiziert werden //NOINDEX:Seite soll nicht aufgenommen werden//NOFOLLOW Links werden nicht verfolgt-->
         <meta name='audience' content='alle'>				<!-- definiert die Zielgruppe der Website  -->
         <meta name='page-topic' content='Dienstleistung'>		<!-- Zuordnungsdefinition für die Suchmaschine -->
-        <meta name='revisit-after' CONTENT='5 days'>			<!-- definiert den erneuten Besuch des Spiders//hier:nach sieben Tagen  -->
+        <meta name='revisit-after' CONTENT='7 days'>			<!-- definiert den erneuten Besuch des Spiders//hier:nach sieben Tagen  -->
         <title>Download Area</title>
         <script language='JavaScript' src="https://code.jquery.com/jquery-latest.js"></script>                  
         <script language='JavaScript' src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js' integrity='sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy' crossorigin='anonymous'></script>
@@ -171,15 +170,16 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
     </head>
     <body>
         <script language="JavaScript">
-            var output;
-            output = detect();
+            var output;           
             var breiteCheck = window.innerWidth < 990 ? true : false;
-            IE = "Internet Explorer";
+            var IE = "Internet Explorer";			
             if (breiteCheck) {
                 var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nAufruf wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
                 alert(ausgabe);
                 open(location, '_self').close();
-            } else if (output == null) {
+			}
+			output = detect();
+            if (output == null) {
                 output = "Unknown Browser"
             } else if (output.trim() === IE.trim()) {
                 var ausgabe = "Der Internet Explorer ist der einzige Browser, der von dieser Applikation nicht unterstützt wird.\nAufruf wird blockiert, bis ein anderer Browser verwendet wird!";
@@ -188,14 +188,8 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
             }
             output += " is using surfing in Internet";
             document.body.innerHTML = output;
-        </script>
-        <?php
-        if (!empty($arCaptcha))
-            echo $arCaptcha[0];
-        ?>
+        </script>      
         <script language="JavaScript">
-            /*var fensterHoehe = window.innerHeight;
-             var fensterBreite = window.innerWidth;*/
             $(document).ready(function () {
                 rotiere_pic(0);
             });
@@ -217,6 +211,10 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                 $("#photos img").css({position: 'absolute', height: '67px', width: '107px'});
             }
         </script>
+		<?php
+        if (!empty($arCaptcha))
+            echo $arCaptcha[0];
+        ?>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
@@ -226,7 +224,6 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">      
                             <a class="dropdown-item" href="phpinfo.php" target="_blank">PHP Info</a>
-                            <a class="dropdown-item" href='pdfservlet/docs/Datenschutzerklaerung.pdf' target='_blank'>Impressum</a>
                             <a class="dropdown-item" href='#' onclick="impressum()">Impressum</a>
                         </div>
                     </li>
@@ -266,11 +263,11 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label>MessageBox:</label>
-                                <textarea  rows="6"cols="175" id="comment"  name="MsgBox" placeholder="MessageBox:Nachrichten hier!"><?php
-        if (!empty($_REQUEST['MsgBox'])) {
-            echo $_REQUEST['MsgBox'];
-        }
-        ?>
+                                <textarea  rows="6"cols="175" id="comment"  name="MsgBox" placeholder="MessageBox:Nachrichten hier!">
+								<?php
+									if (!empty($_REQUEST['MsgBox'])) 
+										echo $_REQUEST['MsgBox'];
+								?>
                                 </textarea>
                                 <script language="JavaScript">
                                     CKEDITOR.replace('comment');
@@ -283,7 +280,6 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                             <?php
                             require_once ("SimplePhpCaptcha.php");
                             $captcha['captcha'] = simple_php_captcha();
-                            //$_SESSION['captcha'] = simple_php_captcha();
                             $showCaptcha = '<img  src="' . $captcha['captcha']['image_src'] . '" alt="CAPTCHA code">';
                             ?>
                             <?= $showCaptcha ?>
@@ -309,9 +305,6 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                                         </li>
                                         <li>
                                             Sollten dennoch Probleme während der Installation auftreten, die Applikation läuft partout nicht, dann schicken Sie mir bitte eine Nachricht in der MessageBox.
-                                        </li>
-                                        <li>
-                                            u.U. kann die Zip File durch den Download beschädigt und somit nicht extrahiert werden. In diesem Falle hilft <a href="https://www.diskinternals.com/zip-repair/" target="_blank">dieses</a> Tool weiter.
                                         </li>
                                     </ul>
                                 </div>                        
@@ -422,7 +415,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
             }
 
             function impressum() {
-                var alertText = "V.i.S.d.P: Kipp, Thomas\nAm Wall 50-54\n28195 Bremen";
+                var alertText = "V.i.S.d.P: Kipp, Thomas\nRockwinkeler Landstr.110\n28325 Bremen";
                 confirm(alertText);
             }
         </script>
