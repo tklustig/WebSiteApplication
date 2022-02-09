@@ -41,15 +41,15 @@ function senden($content) {
         $sendMail = str_replace($umlaute, $ersetzen, $nachricht);
         $datei = fopen("nachricht.txt", "a+");
         $ausgabe = "$nachricht\r\n";
-        if (mail($to, $subject, $sendMail, $header)) 
-            $strCaptcha = "<p>eine neue Message vom $heute Uhr wurde an $to verschickt.</p>";          
-         else 
-            $strCaptcha = "<p><font color='red'>Mailerror. Mail konnte nicht verschickt werden!</p><font color='black'>";          
-		array_push($arCaptcha, $strCaptcha);
+        if (mail($to, $subject, $sendMail, $header))
+            $strCaptcha = "<p>eine neue Message vom $heute Uhr wurde an $to verschickt.</p>";
+        else
+            $strCaptcha = "<p><font color='red'>Mailerror. Mail konnte nicht verschickt werden!</p><font color='black'>";
+        array_push($arCaptcha, $strCaptcha);
         fputs($datei, $heute);
         fputs($datei, $ausgabe); // schreibt die Nachricht i.d.Datei
         fclose($datei);
-		return true;
+        return true;
     } catch (Exception $e) {
         print_r($e->getMessage() . ' at line ' . $e->getLine() . ' in file ' . $e->getFile());
         return false;
@@ -164,21 +164,22 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
         <script language='JavaScript' src='plugin/ckeditor/ckeditor.js'></script>
         <script language='JavaScript' src='js/Alert.js'></script>
         <script language='JavaScript' src='js/detectBrowser.js'></script>
+        <script language='JavaScript' src='js/datetime.js'></script>
         <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css' integrity='sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO' crossorigin='anonymous'>
         <link rel='stylesheet' href='css/style.css' rel='stylesheet'>
         <link rel='icon' href='data:;base64,iVBORw0KGgo='>        
     </head>
     <body>
         <script language="JavaScript">
-            var output;           
+            var output;
             var breiteCheck = window.innerWidth < 990 ? true : false;
-            var IE = "Internet Explorer";			
+            var IE = "Internet Explorer";
             if (breiteCheck) {
                 var ausgabe = 'Für die mathematische Dummheit von Smartphonebenutzern ist diese Website ungeeignet!\nAufruf wird blockiert, bis ausreichend Bildschirmfläche vorhanden ist!';
                 alert(ausgabe);
                 open(location, '_self').close();
-			}
-			output = detect();
+            }
+            output = detect();
             if (output == null) {
                 output = "Unknown Browser"
             } else if (output.trim() === IE.trim()) {
@@ -188,6 +189,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
             }
             output += " is using surfing in Internet";
             document.body.innerHTML = output;
+            document.write(" <div id='uhr' style='float:right; background: #CEF6D8;'></div>");
         </script>      
         <script language="JavaScript">
             $(document).ready(function () {
@@ -211,7 +213,7 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                 $("#photos img").css({position: 'absolute', height: '67px', width: '107px'});
             }
         </script>
-		<?php
+        <?php
         if (!empty($arCaptcha))
             echo $arCaptcha[0];
         ?>
@@ -230,14 +232,14 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             My Websites
-                        </a>
+                        </a>          
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="https://tklustig.de/Bewerbungen/index.php" target="_blank">Bewerbungen</a>
                             <a class="dropdown-item" href="https://tklustig.de/SpaceShooter/ShooterJavaScript/index.html" target="_blank">JavaScript-2D-Shooter</a>
                             <a class="dropdown-item" href="https://tklustig.de/temperatur/index.php" target="_blank">Temperaturmessungen</a>
                             <a class="dropdown-item" href="https://tklustig.de/Yii2_ErkanImmo/frontend/web/index.php"target="_blank">Maklerapplikation(kostenpflichtig)</a>
                             <a class="dropdown-item" href="https://tklustig.de/Yii2_PsychoApp/frontend/web/index.php"target="_blank">PsychoApp(kostenpflichtig)</a>
-                        </div>
+                        </div>              
                     </li>
                 </ul>
             </div>
@@ -264,10 +266,10 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                             <div class="form-group">
                                 <label>MessageBox:</label>
                                 <textarea  rows="6"cols="175" id="comment"  name="MsgBox" placeholder="MessageBox:Nachrichten hier!">
-								<?php
-									if (!empty($_REQUEST['MsgBox'])) 
-										echo $_REQUEST['MsgBox'];
-								?>
+                                    <?php
+                                    if (!empty($_REQUEST['MsgBox']))
+                                        echo $_REQUEST['MsgBox'];
+                                    ?>
                                 </textarea>
                                 <script language="JavaScript">
                                     CKEDITOR.replace('comment');
