@@ -67,8 +67,8 @@ $filename8 = 'SpaceShooter.zip';
 $filename9 = 'Halma.zip';
 $filename10 = 'Pacman.zip';
 $filename11 = 'Fibonacci.zip';
+$filename12 = 'Source.zip';
 $strCaptcha = "<div id='idLabel'>Captcha inkorrekt. Bitte lösen..</div>";
-
 if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gesendet wurde (= Ein Knopf gedrückt wurde)
     if (file_exists($filename1) && isset($_SESSION['captchaIsSolved']) && $_SESSION['captchaIsSolved'] == true) {
         makeDownload($filename1);
@@ -134,6 +134,14 @@ if (!empty($_REQUEST["download1"])) { // Prüfe ERST, ob das Formular schon gese
         $_SESSION['captchaIsSolved'] = false;
     } else
         array_push($arCaptcha, $strCaptcha);
+} else if (!empty($_REQUEST["download12"])) {
+    if (file_exists($filename12) && $_REQUEST['cap'] == 'aDmIn') {
+        makeDownload($filename12);
+        $_SESSION['captchaIsSolved'] = false;
+    } else {
+        $error = "<div id='idLabel'>Falsches Passwort eingegeben. Sourcecode ist privat!</div>";
+        array_push($arCaptcha, $error);
+    }
 }
 //verarbeite Trigger1:Absenden-Submitbutton wurde gepusht und Messagebox ist nicht leer
 if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
@@ -398,8 +406,15 @@ if (isset($_REQUEST['message']) && !empty($_REQUEST['MsgBox'])) {
                                                     <td>Fibonacci</td>
                                                     <td>C#</td>
                                                     <td><input type="submit" name="download11" class="btn btn-info btn-sm" value="<?= $filename11; ?>"></td>
-                                                    <td><?= dateiGroesse($filename10); ?></td>
-                                                </tr>													
+                                                    <td><?= dateiGroesse($filename11); ?></td>
+                                                </tr>	
+                                                <tr>
+                                                    <td>Source-Code</td>
+                                                    <td>Programmierung</td>
+                                                    <td>C# und PHP</td>
+                                                    <td><input type="submit" name="download12" class="btn btn-info btn-sm" value="<?= $filename12; ?>"></td>
+                                                    <td><?= dateiGroesse($filename12); ?></td>
+                                                </tr>	
                                             </tbody>
                                         </table>
                                     </div>
